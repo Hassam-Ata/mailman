@@ -19,6 +19,7 @@ model User {
   accounts      Account[]
   workspaces    Workspace[]       @relation("UserWorkspaces")
   memberships   WorkspaceMember[]
+  collections   Collection[]
 
   @@unique([email])
   @@map("user")
@@ -80,6 +81,7 @@ model Workspace {
   members     WorkspaceMember[]
   createdAt   DateTime          @default(now())
   updatedAt   DateTime          @default(now()) @updatedAt
+  Collection  Collection[]
 
   @@unique([name, ownerId])
 }
@@ -105,4 +107,19 @@ model WorkspaceMember {
   updatedAt DateTime @default(now()) @updatedAt
 
   @@unique([userId, workspaceId])
+}
+
+// 
+// _____________________Collections and Requests___________________________
+// 
+
+model Collection {
+  id          String    @id @default(cuid())
+  name        String
+  workspaceId String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @default(now()) @updatedAt
+  User        User?     @relation(fields: [userId], references: [id])
+  userId      String?
 }
