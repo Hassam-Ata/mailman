@@ -19,9 +19,13 @@ export function useCreateWorkspace() {
   });
 }
 
-export function useGetWorkspace(id: string) {
+export function useGetWorkspace(id: string | undefined) {
   return useQuery({
     queryKey: ["workspace", id],
-    queryFn: async () => getWorkspaceById(id),
+    queryFn: async () => {
+      if (!id) throw new Error("Workspace ID is required");
+      return getWorkspaceById(id);
+    },
+    enabled: !!id, // Only run query when id is truthy
   });
 }

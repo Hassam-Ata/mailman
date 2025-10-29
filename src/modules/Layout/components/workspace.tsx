@@ -1,9 +1,11 @@
-import { useWorkspaces } from "@/modules/workspace/hooks/workspace";
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Hint } from "@/components/ui/hint";
-import { Loader, Plus, Space, User } from "lucide-react";
-import { useEffect, useState } from "react";
-import { useWorkspaceStore } from "../store";
+import { Loader, Plus, User } from "lucide-react";
+import React, { useEffect, useState } from "react";
+
+import CreateWorkspace from "./create-workspace";
 import {
   Select,
   SelectContent,
@@ -12,12 +14,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
-import CreateWorkspace from "./create-workspace";
+import { useWorkspaces } from "@/modules/workspace/hooks/workspace";
+import { useWorkspaceStore } from "../store";
 
-const Workspace = () => {
+const WorkSpace = () => {
   const { data: workspaces, isLoading } = useWorkspaces();
-  const { selectedWorkspace, setSelectedWorkspace } = useWorkspaceStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const { selectedWorkspace, setSelectedWorkspace } = useWorkspaceStore();
 
   useEffect(() => {
     if (workspaces && workspaces.length > 0 && !selectedWorkspace) {
@@ -30,9 +34,7 @@ const Workspace = () => {
   }
 
   if (!workspaces || workspaces.length === 0) {
-    return (
-      <div className="font-semibold text-indigo-400">No Workspace Found</div>
-    );
+    return <div>No workspace found</div>;
   }
 
   return (
@@ -73,6 +75,7 @@ const Workspace = () => {
           </SelectContent>
         </Select>
       </Hint>
+
       <CreateWorkspace
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
@@ -80,4 +83,5 @@ const Workspace = () => {
     </>
   );
 };
-export default Workspace;
+
+export default WorkSpace;

@@ -13,7 +13,7 @@ export function useCollections(workspaceId: string) {
   });
 }
 
-export function useCreateCollection(workspaceId: string, name: string) {
+export function useCreateCollection(workspaceId: string) {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (name: string) => createCollection(workspaceId, name),
