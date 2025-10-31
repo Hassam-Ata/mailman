@@ -4,7 +4,6 @@ import UserButton from "@/modules/authentication/components/user-button";
 import { UserProps } from "../types";
 import { Unplug } from "lucide-react";
 import SearchBar from "./search-bar";
-import { ModeToggle } from "@/components/mode-toggle";
 import InviteMember from "./invite-member";
 import Workspace from "./workspace";
 
@@ -29,7 +28,7 @@ const Header = ({ user }: Props) => {
 
       <div className="col-span-2 flex items-center justify-end space-x-2 hover:cursor-pointer hover:opacity-80">
         {/* @ts-ignore */}
-        <ModeToggle />
+
         <Workspace />
         <InviteMember />
 

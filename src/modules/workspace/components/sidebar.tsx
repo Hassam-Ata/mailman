@@ -12,6 +12,9 @@ import {
   Share2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import CreateCollection from "@/modules/collections/components/create-collection";
+import EmptyCollections from "@/modules/collections/components/empty-collections";
+import CollectionFolder from "@/modules/collections/components/collection-folder";
 
 interface Props {
   currentWorkspace: any;
@@ -73,6 +76,19 @@ const TabbedSidebar = ({ currentWorkspace }: Props) => {
                 <span className="text-sm font-medium">New</span>
               </Button>
             </div>
+
+            {collections && collections.length > 0 ? (
+              collections.map((collection) => (
+                <div
+                  className="flex flex-col justify-start items-start p-3 border-b border-zinc-800 w-full"
+                  key={collection.id}
+                >
+                  <CollectionFolder collection={collection} />
+                </div>
+              ))
+            ) : (
+              <EmptyCollections />
+            )}
           </div>
         );
 
@@ -103,6 +119,11 @@ const TabbedSidebar = ({ currentWorkspace }: Props) => {
       <div className="flex-1 bg-zinc-900 overflow-y-auto">
         {renderTabContent()}
       </div>
+      <CreateCollection
+        workspaceId={currentWorkspace?.id}
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+      />
     </div>
   );
 };
